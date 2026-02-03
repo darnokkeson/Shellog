@@ -1,65 +1,49 @@
-Shellog 
-Shellog is a lightweight tool designed to record entire terminal sessions (both input and output). It was created out of a need to track system changes and debug errors caused by complex commands or kernel interactions.
-Unlike the standard .bash_history, which only saves commands, Shellog captures everything you see on your screen.
-Features
+# Shellog
 
-    Full Session Recording: Saves both what you type and what the system returns.
-    Automated Logging: Starts automatically every time you open your terminal.
-    Self-Healing: If your system crashes or the terminal is killed, a "Healing" script recovers missing text logs from binary data on the next startup.
-    Auto-Cleanup: Automatically removes logs older than 90 days to save disk space.
-    Clean Output: Uses Perl filters to strip terminal escape codes (garbage characters), making the .txt logs easy to read.
+Shellog is a tool for automated recording of entire shell sessions (both input commands and their output). The project was created because the standard Bash history (.bash_history) does not record system responses, which is crucial for debugging and learning Linux administration.
 
-Installation
-1. Place the files
-The script is configured to run from the /opt directory. Move the Shellog folder there:
-bash
+## Features
+- Full session recording: Records terminal input and output in real-time.
+- Automation: Starts automatically every time a shell is opened.
+- Healing Mechanism: Recovers missing text files after a system crash or sudden terminal closure.
+- Auto-Cleanup: Automatically deletes logs older than 90 days.
+- Readability: Uses Perl filters to strip unnecessary terminal control characters from .txt files.
 
+## Installation
+
+1. File Location
+The script is configured for the /opt directory. Move the Shellog folder there:
 sudo mv Shellog /opt/
 
-Używaj kodu z rozwagą.
-2. Set Permissions
-Navigate to the directory and make the scripts executable:
-bash
-
+2. Permissions
+Set execution permissions for the scripts:
 cd /opt/Shellog
 chmod +x Shellog.sh src/Healing.sh src/Cleanup.sh
 
-Używaj kodu z rozwagą.
-3. Integrate with Bash
-To start recording automatically, add the following snippet to the bottom of your ~/.bashrc file:
-bash
+3. Autostart Configuration
+Add the following block of code to the bottom of your ~/.bashrc file:
 
-# SHELLOG - Terminal Session Recorder
+# SHELLOG - Program for record entire shell session
 if [ -z "$TERMINAL_RECORDING" ]; then
     export TERMINAL_RECORDING=1
     /opt/Shellog/Shellog.sh
     exit
 fi
 
-Używaj kodu z rozwagą.
-Apply the changes immediately:
-bash
-
+4. Activation
+Apply the changes without restarting the terminal:
 source ~/.bashrc
 
-Używaj kodu z rozwagą.
-How it works
+## Usage and Logs
+- Location: All sessions are stored in the $HOME/Shellog/Logs/ directory.
+- Structure: Each day has a separate folder named by date (e.g., 20231027).
+- Viewing: It is recommended to use less -R to preserve terminal colors:
+less -R ~/Shellog/Logs/DATE/filename.txt
 
-    Logs Location: All recordings are stored in $HOME/Shellog/Logs/.
-    Directory Structure: Logs are organized by date (e.g., ~/Shellog/Logs/20231027/).
-    File Formats:
-        .log: Raw session data.
-        .txt: Cleaned, human-readable version.
+## Project Architecture
+- Shellog.sh: Main script managing the session using script -f.
+- src/Healing.sh: Repairs orphaned .log files before starting a new session.
+- src/Cleanup.sh: Cleanup script for old data (default 90 days).
 
-Viewing Logs
-For the best experience, use less -R to view the .txt files. This flag preserves terminal colors while keeping the text readable:
-bash
-
-less -R ~/Shellog/Logs/YYYYMMDD/filename.txt
-
-Używaj kodu z rozwagą.
-Project Structure
-
-    Shellog.sh: The main entry point that initializes the session.
-    src/Healing.sh: Checks for interrupted sessions and converts orphaned .log files to .txt.
-    src/Cleanup.sh: Deletes logs older than 90 days.
+---
+Created to help Linux users keep track of their journey and learn from past mistakes.
