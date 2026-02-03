@@ -1,9 +1,4 @@
-Got it — you want **ONE block only**, no nested code fences inside it.
-
-Here is your **entire README in a single raw Markdown code block**, safe to paste into GitHub:
-
-```markdown
-# Shellog 🐚📜
+# Shellog
 
 Shellog is a lightweight tool designed to record entire terminal sessions (both input and output). It was created out of a need to track system changes and debug errors caused by complex commands or kernel interactions.
 
@@ -86,5 +81,3 @@ For the best experience, use `less -R` to view the `.txt` files:
 - **Shellog.sh** — The main entry point that initializes the session  
 - **src/Healing.sh** — Checks for interrupted sessions and converts orphaned `.log` files to `.txt`  
 - **src/Cleanup.sh** — Deletes logs older than 90 days
-```
-
