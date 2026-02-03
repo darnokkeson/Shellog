@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Define the target directory with the default path we discussed
+echo CLEANUP
+
+# Target directory for logs
 TARGET_DIR="${1:-$HOME/Shellog/Logs}"
 
-# Safety check: Verify if the directory exists
-if [ ! -d "$TARGET_DIR" ]; then
-    echo "Shellog Error: Directory $TARGET_DIR does not exist."
-    exit 1
-fi
+# Silent check: if directory doesn't exist, exit quietly
+[ ! -d "$TARGET_DIR" ] && exit 0
 
-# Find and delete files older than 90 days (approx. 3 months)
-# -type f : looks for files only
-# -mtime +90 : modified more than 90 days ago
-# -delete : removes the files directly
-find "$TARGET_DIR" -type d -mtime +90 -exec rm -rf {} + 
+# Professional silent cleanup:
+# -mindepth 1: prevents deleting the Logs folder itself
+# -maxdepth 1: targets only the session folders/files inside
+# -mtime +90: strictly older than 90 days
+# -exec rm -rf {} +: deletes everything found efficiently in bulk
+find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -mtime +90 -exec rm -rf {} +
 

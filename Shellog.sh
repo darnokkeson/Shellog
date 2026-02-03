@@ -5,7 +5,7 @@
 
 # Script to create missing .txt file when in last session wasn't 
 # because of crash system or closing terminal by x
-./src/Healing.sh
+/opt/Shellog/src/Healing.sh
 
 # START directory
 SHELLOG=Shellog
@@ -32,4 +32,4 @@ script -f "$LOG_FILE"
 perl -pe 's/\e\[\?2004[hl]//g; s/\e\]0;.*?\a//g; s/\x07//g; s/\r//g' "$LOG_FILE" >> "$TXT_FILE"
 
 # Starting Script to automate removal old directory and .log and .txt files
-./src/Cleanup.sh
+/opt/Shellog/src/Cleanup.sh
